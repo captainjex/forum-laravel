@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Topic extends Model
@@ -12,4 +13,9 @@ class Topic extends Model
         'slug',
         'body'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

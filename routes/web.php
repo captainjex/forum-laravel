@@ -17,3 +17,6 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 Route::get('/topics/create', 'TopicController@create');
 Route::post('/topics/create', 'TopicController@store');
+
+Route::get('/topics', 'TopicController@index');
+Route::get('/topics/{slug}', 'TopicController@show');

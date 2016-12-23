@@ -43,4 +43,9 @@ class User extends Authenticatable
     public function topics(){
         return $this->hasMany(Topic::class);
     }
+
+    public function getAvatar()
+    {
+        return "https://www.gravatar.com/avatar/" . md5($this->email) . "?d=mm&s=50";
+    }
 }

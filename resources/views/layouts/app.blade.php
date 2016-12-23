@@ -25,6 +25,7 @@
         @include('layouts.partials.nav')
 
         <div class="container">
+            @include('layouts.partials.flash')
             @yield('content')
 
         </div>
