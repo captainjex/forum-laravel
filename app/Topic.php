@@ -18,4 +18,9 @@ class Topic extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function channel()
+    {
+        return $this->belongsTo(\App\Channel::class);
+    }
 }

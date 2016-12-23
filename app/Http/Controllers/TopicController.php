@@ -42,4 +42,16 @@ class TopicController extends Controller
         $topic = Topic::whereSlug($slug)->first();
         return view('topics.show', compact('topic'));
     }
+
+    public function edit($slug)
+    {
+        $topic = Topic::whereSlug($slug)->first();
+        $channels = Channel::all();
+        return view('topics.edit', compact('topic', 'channels'));
+    }
+
+    public function update(Request $request)
+    {
+        dd($request->title);
+    }
 }
