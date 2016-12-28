@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="panel panel-default">
-                <div class="panel-heading">{{ $topic->title }}</div>
+                <div class="panel-heading">{{ $topic->title }} - (<a href="">{{ $topic->channel->name }}</a>)</div>
                 <div class="panel-body">{{ $topic->body }}</div>
             </div>
         </div>

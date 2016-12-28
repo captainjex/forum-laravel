@@ -22,3 +22,5 @@ Route::get('/topics', 'TopicController@index');
 Route::get('/topics/{slug}', 'TopicController@show');
 Route::get('/topics/{slug}/edit', 'TopicController@edit')->name('topics.edit');
 Route::post('/topics/{slug}/edit', 'TopicController@update');
+
+Route::post('/channel/{slug}', 'TopicController@channel')->name('topics.channel');

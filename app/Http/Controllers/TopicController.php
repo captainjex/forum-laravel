@@ -34,7 +34,8 @@ class TopicController extends Controller
 
     public function index(){
         $topics = Topic::latest()->get();
-        return view('topics.index', compact('topics'));
+        $channels = Channel::all();
+        return view('topics.index', compact('topics', 'channels'));
     }
 
     public function show($slug)
@@ -46,12 +47,44 @@ class TopicController extends Controller
     public function edit($slug)
     {
         $topic = Topic::whereSlug($slug)->first();
-        $channels = Channel::all();
-        return view('topics.edit', compact('topic', 'channels'));
+        if (Auth::user()->id == $topic->user_id){
+            $channels = Channel::all();
+            return view('topics.edit', compact('topic', 'channels'));
+        } else{
+            return redirect()->to("/topics/{$slug}");
+        }
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $slug)
     {
-        dd($request->title);
+        $topic = Topic::whereSlug($slug)->first();
+        if (!$topic) {
+            return redirect()->to('/topics');
+        }
+        if ($request->user()->id == $topic->user_id) {
+            $this->validate($request, [
+                'title' => 'required|max:255|min:3|unique:topics,title,' . $topic->id,
+                'body' => 'required',
+                'channel' => 'required',
+            ]);
+            $topic->update([
+                'title' => $request->title,
+                'slug' => str_slug($request->title),
+                'body' => $request->body,
+                'channel_id' => $request->channel,
+            ]);
+            $request->session()->flash('status', 'Topik berhasil diperbarui');
+            return redirect()->to("/topics/" . str_slug($topic->title));
+
+        }else{
+            $request->session()->flash('status', 'Tidak boleh mengedit ini');
+            return redirect()->to('/topics');
+        }
+    }
+
+    public function channel($slug)
+    {
+        $channel = Channel::whereSlug($slug)->first;
+        
     }
 }
